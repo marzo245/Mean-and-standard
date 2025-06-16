@@ -37,8 +37,8 @@ public class MeanStdDevAppTest {
 
     MeanStdDevApp.main(new String[0]);
     String output = outContent.toString();
-    assertTrue(output.contains("Mean: 55,00"));
-    assertTrue(output.contains("Standard Deviation: 30,28"));
+    assertTrue(output.contains("Mean: 55.00"));
+    assertTrue(output.contains("Standard Deviation: 30.28"));
   }
 
   @Test
