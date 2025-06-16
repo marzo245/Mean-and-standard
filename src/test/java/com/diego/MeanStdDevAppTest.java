@@ -91,4 +91,55 @@ public class MeanStdDevAppTest {
     assertEquals(42.0, mean, 0.001);
     assertTrue(Double.isFinite(stdDev)); // debería dar 0.0 si se maneja correctamente
   }
+
+  @Test
+  void testForEachAccumulate() {
+    MeanStdDevApp.FunctionalLinkedList<Integer> list = new MeanStdDevApp.FunctionalLinkedList<>();
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    final int[] sum = { 0 };
+    list.forEach(x -> sum[0] += x);
+    assertEquals(6, sum[0]);
+  }
+
+  @Test
+  void testFilterNoMatch() {
+    MeanStdDevApp.FunctionalLinkedList<Integer> list = new MeanStdDevApp.FunctionalLinkedList<>();
+    list.add(1);
+    list.add(3);
+    MeanStdDevApp.FunctionalLinkedList<Integer> even = list.filter(x ->
+      x % 2 == 0
+    );
+    assertEquals(0, even.size());
+  }
+
+  @Test
+  void testMapToString() {
+    MeanStdDevApp.FunctionalLinkedList<Integer> list = new MeanStdDevApp.FunctionalLinkedList<>();
+    list.add(5);
+    list.add(10);
+    MeanStdDevApp.FunctionalLinkedList<String> mapped = list.map(
+      Object::toString
+    );
+    StringBuilder sb = new StringBuilder();
+    mapped.forEach(sb::append);
+    assertEquals("510", sb.toString());
+  }
+
+  @Test
+  void testReduceMultiplication() {
+    MeanStdDevApp.FunctionalLinkedList<Integer> list = new MeanStdDevApp.FunctionalLinkedList<>();
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    int product = list.reduce(1, (a, b) -> a * b);
+    assertEquals(24, product);
+  }
+
+  @Test
+  void testSizeEmptyList() {
+    MeanStdDevApp.FunctionalLinkedList<Double> list = new MeanStdDevApp.FunctionalLinkedList<>();
+    assertEquals(0, list.size());
+  }
 }
